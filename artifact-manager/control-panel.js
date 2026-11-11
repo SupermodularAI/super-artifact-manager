@@ -1412,6 +1412,7 @@ img.shot{display:block;width:auto;max-width:100%;max-height:150px;object-fit:con
 .cm:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
 .cm:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .cmm{margin-left:auto}
+.tc .ch .cmm{margin-left:0}   /* the thread header: time pushes right, then resolve and ⋯ side by side */
 .agt{display:inline-block;padding:1px 6px;border-radius:999px;font:600 9.5px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:#fff;background:#D97757}
 .lnk{display:inline-flex;align-items:center;gap:4px;max-width:100%;margin:1px 2px;padding:1px 8px 1px 6px;border-radius:999px;border:1px solid var(--bd);background:var(--bg2);color:var(--brand);font:600 11px/1.6 var(--sans);text-decoration:none;vertical-align:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lnk:hover{border-color:var(--brand)}
