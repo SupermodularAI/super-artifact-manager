@@ -1,0 +1,38 @@
+{
+  "id": "approval-rules",
+  "type": "document",
+  "name": "Approval rules",
+  "workspace": "Acme",
+  "project": "Expenses",
+  "owner": "Sam Rivera",
+  "updated": "2026-11-10",
+  "comments": {
+    "file": "comments.json"
+  },
+  "iterations": [
+    {
+      "id": "v4",
+      "label": "v4 (draft)",
+      "url": "v4.html",
+      "status": "draft"
+    },
+    {
+      "id": "v3",
+      "label": "v3 (changes)",
+      "url": "v3.html",
+      "status": "changes"
+    },
+    {
+      "id": "v2",
+      "label": "v2 (revised)",
+      "url": "index.html",
+      "status": "review"
+    },
+    {
+      "id": "v1",
+      "label": "v1 (first draft)",
+      "url": "v1.html",
+      "status": "closed"
+    }
+  ]
+}

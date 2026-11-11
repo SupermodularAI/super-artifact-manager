@@ -1,0 +1,172 @@
+{
+  "comments": [
+    {
+      "id": "co-01",
+      "page": "index.html",
+      "comment": "Contractors on a monthly contract only? What about day-rate contractors?",
+      "createdAt": "2026-11-02T09:41:00.000Z",
+      "author": "Sam Rivera",
+      "selector": "main > p:nth-of-type(1)",
+      "quote": "including contractors on a monthly contract",
+      "replies": [
+        {
+          "comment": "Day-rate contractors invoice expenses. Will add a line.",
+          "createdAt": "2026-11-02T11:47:00.000Z",
+          "author": "Clara Voss"
+        }
+      ]
+    },
+    {
+      "id": "co-02",
+      "page": "index.html",
+      "comment": "Section titles are numbered, but the intro is not. Fine, but keep the numbering if you link to sections from the app.",
+      "createdAt": "2026-11-03T10:51:00.000Z",
+      "agent": "claude-code",
+      "selector": "main h1",
+      "point": {
+        "x": 0.95,
+        "y": 0.5
+      },
+      "links": [
+        {
+          "label": "WCAG: headings and labels",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html"
+        }
+      ]
+    },
+    {
+      "id": "co-03",
+      "page": "index.html",
+      "comment": "\"Cheapest reasonable\" needs an example. Is a 7am flight reasonable?",
+      "createdAt": "2026-11-04T12:04:00.000Z",
+      "author": "Rui Matos",
+      "selector": "main > p:nth-of-type(3)",
+      "quote": "cheapest reasonable option",
+      "replies": [
+        {
+          "comment": "Add a rule of thumb: no departures before 07:00 or after 21:00 unless it saves more than 100 €.",
+          "createdAt": "2026-11-04T13:07:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "Plain language",
+              "url": "https://www.plainlanguage.gov/guidelines/"
+            }
+          ]
+        },
+        {
+          "comment": "That works.",
+          "createdAt": "2026-11-04T15:13:00.000Z",
+          "author": "Rui Matos"
+        }
+      ]
+    },
+    {
+      "id": "co-04",
+      "page": "index.html",
+      "comment": "Meals: does the 40 € include alcohol?",
+      "createdAt": "2026-11-05T09:02:00.000Z",
+      "author": "Priya Nair",
+      "selector": "main > p:nth-of-type(4)",
+      "area": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+      }
+    },
+    {
+      "id": "co-05",
+      "page": "index.html",
+      "comment": "30 days is tight after a long trip.",
+      "createdAt": "2026-11-05T14:17:00.000Z",
+      "author": "Ana Costa",
+      "selector": "main > p:nth-of-type(5)",
+      "quote": "within 30 days",
+      "replies": [
+        {
+          "comment": "Keeping 30. Most claims come in within a week.",
+          "createdAt": "2026-11-06T09:09:00.000Z",
+          "author": "Clara Voss"
+        }
+      ],
+      "resolved": true
+    },
+    {
+      "id": "co-06",
+      "page": "index.html",
+      "comment": "Say what happens after 30 days, so the rule has an answer for the edge case.",
+      "createdAt": "2026-11-06T10:12:00.000Z",
+      "agent": "claude-code",
+      "selector": "main > p:nth-of-type(5)",
+      "point": {
+        "x": 0.98,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "co-07",
+      "page": "index.html",
+      "comment": "14:00 cut-off: in which time zone?",
+      "createdAt": "2026-11-06T15:27:00.000Z",
+      "author": "Jonas Weber",
+      "selector": "main > p:nth-of-type(7)",
+      "quote": "every weekday at 14:00",
+      "replies": [
+        {
+          "comment": "Lisbon time. Write it as 14:00 (Lisbon) and show it in the reader's local time in the app.",
+          "createdAt": "2026-11-06T16:30:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "MDN: <time>",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "co-08",
+      "page": "v3.html",
+      "comment": "35 € a day was a typo, it stays 40 €.",
+      "createdAt": "2026-11-09T10:33:00.000Z",
+      "author": "Clara Voss",
+      "selector": "main > p:nth-of-type(4)",
+      "quote": "Up to 35 € a day"
+    },
+    {
+      "id": "co-09",
+      "page": "v2.html",
+      "comment": "This version drops the \"changes to this policy\" section. Readers need to know how they hear about changes.",
+      "createdAt": "2026-11-07T10:19:00.000Z",
+      "agent": "claude-code",
+      "selector": "main h1",
+      "point": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "links": [
+        {
+          "label": "Plain language",
+          "url": "https://www.plainlanguage.gov/guidelines/"
+        }
+      ]
+    },
+    {
+      "id": "co-10",
+      "page": "v1.html",
+      "comment": "Missing: what to do without a receipt.",
+      "createdAt": "2026-11-01T10:37:00.000Z",
+      "author": "Sam Rivera",
+      "selector": "main > p:nth-of-type(5)",
+      "area": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+      },
+      "resolved": true
+    }
+  ]
+}

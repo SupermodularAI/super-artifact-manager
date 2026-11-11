@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Expenses (v1) · Super Artifact Manager (Prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<script src="../../control-panel.js" data-config="journeys.json"></script>
+<script>window.SM_ANNOTATE_PLUGIN = true; window.SM_ARTEFACT_KEY = 'expenses-demo';</script>
+<script src="../../../annotate/annotator.js" defer></script>
+<style>
+body{margin:0;background:#fff;color:#151515;font:15px/1.45 Georgia,serif;padding:32px}
+h1{font-size:26px;margin:0 0 4px}
+p{color:#666;margin:0 0 20px}
+table{border-collapse:collapse;width:100%;max-width:820px}
+td,th{border-bottom:1px solid #ddd;padding:8px 6px;text-align:left}
+td:last-child{text-align:right}
+</style>
+</head>
+<body>
+<h1>Expenses (first pass)</h1>
+<p id="who"></p>
+<table><thead><tr><th>ID</th><th>Who</th><th>Category</th><th>Status</th><th>Amount</th></tr></thead><tbody id="t"><tr><td colspan="5">Loading…</td></tr></tbody></table>
+<script>
+const P = window.SMProto;
+document.getElementById('who').textContent = 'Signed in as ' + P.user.name + ' (' + P.role + ')';
+fetch('/api/requests').then(r => r.ok ? r.json() : Promise.reject(r.status)).then(rows => {
+  if (P.role === 'requester') rows = rows.filter(r => r.requester === P.user.name);
+  document.getElementById('t').innerHTML = rows.slice(0, 50).map(r => `<tr><td>${r.id}</td><td>${r.requester}</td><td>${r.category}</td><td>${r.status}</td><td>${r.amount}</td></tr>`).join('') || '<tr><td colspan="5">No requests.</td></tr>';
+}).catch(e => { document.getElementById('t').innerHTML = '<tr><td colspan="5">Error: ' + e + '</td></tr>'; });
+</script>
+</body>
+</html>

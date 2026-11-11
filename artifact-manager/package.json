@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "node --test control-panel.test.js gate/gate.test.mjs",
+    "test:e2e": "npx playwright test",
+    "demo": "node bin/serve.js .. --port ${PORT:-4630}"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
+}

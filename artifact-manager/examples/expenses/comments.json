@@ -1,0 +1,304 @@
+{
+  "comments": [
+    {
+      "id": "ex-01",
+      "page": "index.html",
+      "comment": "Can the heading say how many are waiting? \"Waiting for your approval (5)\" would save a glance.",
+      "createdAt": "2026-11-04T09:55:00.000Z",
+      "author": "Clara Voss",
+      "selector": "#title",
+      "point": {
+        "x": 0.97,
+        "y": 0.15
+      },
+      "replies": [
+        {
+          "comment": "Done in v3: the count sits in the heading and updates as you approve. Keep the number inside the heading so screen readers hear it.",
+          "createdAt": "2026-11-04T10:58:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "WCAG: headings and labels",
+              "url": "https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html"
+            }
+          ]
+        },
+        {
+          "comment": "Perfect, thanks.",
+          "createdAt": "2026-11-04T11:01:00.000Z",
+          "author": "Clara Voss"
+        }
+      ],
+      "journey": "approver-happy",
+      "step": 1
+    },
+    {
+      "id": "ex-02",
+      "page": "index.html",
+      "comment": "The total mixes pending and approved requests. Say which it is, and format it with the locale (2,045 € in en-GB, 2.045 € in de-DE).",
+      "createdAt": "2026-11-05T10:05:00.000Z",
+      "agent": "claude-code",
+      "selector": "#sum",
+      "links": [
+        {
+          "label": "MDN: Intl.NumberFormat",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat"
+        }
+      ],
+      "replies": [
+        {
+          "comment": "Pending only. Will relabel to \"2045 € pending\".",
+          "createdAt": "2026-11-05T12:11:00.000Z",
+          "author": "Sam Rivera"
+        }
+      ],
+      "journey": "approver-happy",
+      "step": 1
+    },
+    {
+      "id": "ex-03",
+      "page": "index.html",
+      "comment": "Search should also find the category, not just the name. I typed \"travel\" and got nothing.",
+      "createdAt": "2026-11-05T14:17:00.000Z",
+      "author": "Rui Matos",
+      "selector": "#q",
+      "point": {
+        "x": 0.3,
+        "y": 0.5
+      },
+      "replies": [
+        {
+          "comment": "Agreed. Match on name, category and description, and say \"No requests match travel\" when empty instead of a blank list.",
+          "createdAt": "2026-11-05T15:20:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "MDN: search input",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search"
+            }
+          ]
+        },
+        {
+          "comment": "And keep the query in the URL so I can share it?",
+          "createdAt": "2026-11-06T09:09:00.000Z",
+          "author": "Rui Matos"
+        },
+        {
+          "comment": "Yes: ?q=travel. Added to the v3 notes.",
+          "createdAt": "2026-11-06T09:09:00.000Z",
+          "agent": "claude-code"
+        }
+      ],
+      "journey": "approver-happy",
+      "step": 2
+    },
+    {
+      "id": "ex-04",
+      "page": "index.html",
+      "comment": "This row is the one finance asks about every week. Could approved-but-unpaid show here too?",
+      "createdAt": "2026-11-06T11:15:00.000Z",
+      "author": "Ana Costa",
+      "selector": "#list .row:nth-child(1)",
+      "area": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 0.6,
+        "h": 1.0
+      },
+      "journey": "approver-happy",
+      "step": 3
+    },
+    {
+      "id": "ex-05",
+      "page": "index.html",
+      "comment": "\"Lisbon to Porto\" is the trip, but approvers want the dates too.",
+      "createdAt": "2026-11-06T15:27:00.000Z",
+      "author": "Sam Rivera",
+      "selector": "#list .row:nth-child(1)",
+      "quote": "Lisbon to Porto",
+      "replies": [
+        {
+          "comment": "Add the dates after the route, in the same muted style, with a machine-readable <time>.",
+          "createdAt": "2026-11-06T16:30:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "MDN: <time>",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time"
+            }
+          ]
+        }
+      ],
+      "journey": "approver-happy",
+      "step": 3
+    },
+    {
+      "id": "ex-06",
+      "page": "index.html",
+      "comment": "The amount column is the only number on the row and it is the lightest text. Bump it to the primary text colour; it fails 4.5:1 on the grey background today.",
+      "createdAt": "2026-11-07T09:16:00.000Z",
+      "agent": "claude-code",
+      "selector": "#list .row:nth-child(3) .amt",
+      "links": [
+        {
+          "label": "WCAG 2.2: contrast",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+        }
+      ],
+      "replies": [
+        {
+          "comment": "Fixed in v2, resolving.",
+          "createdAt": "2026-11-07T10:19:00.000Z",
+          "author": "Clara Voss"
+        }
+      ],
+      "resolved": true
+    },
+    {
+      "id": "ex-07",
+      "page": "index.html",
+      "comment": "Status pill: \"pending\" reads as if nothing happened. \"Waiting for you\" is clearer for approvers.",
+      "createdAt": "2026-11-07T12:25:00.000Z",
+      "author": "Priya Nair",
+      "selector": "#list .row:nth-child(2) .st",
+      "point": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "ex-08",
+      "page": "index.html",
+      "comment": "When the payout is declined, the dialog closes and the error shows at the top. Keep focus on the dialog and announce the error there, or people miss it.",
+      "createdAt": "2026-11-08T10:26:00.000Z",
+      "agent": "claude-code",
+      "selector": "#banner",
+      "links": [
+        {
+          "label": "ARIA: modal dialog",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+        },
+        {
+          "label": "WCAG: status messages",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html"
+        }
+      ],
+      "journey": "payout-declined",
+      "step": 6
+    },
+    {
+      "id": "ex-09",
+      "page": "index.html",
+      "comment": "Header feels empty on wide screens. Maybe the team name here?",
+      "createdAt": "2026-11-08T14:38:00.000Z",
+      "author": "Jonas Weber",
+      "selector": "header",
+      "area": {
+        "x": 0.03,
+        "y": 0.12,
+        "w": 0.32,
+        "h": 0.76
+      }
+    },
+    {
+      "id": "ex-10",
+      "page": "v1.html",
+      "comment": "A plain table is fine for finance, but approvers need a button per row.",
+      "createdAt": "2026-11-01T10:37:00.000Z",
+      "author": "Clara Voss",
+      "selector": "table",
+      "area": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 0.4
+      },
+      "replies": [
+        {
+          "comment": "v2 moves to rows with a Review button. Keep the table semantics for screen readers if it stays a table.",
+          "createdAt": "2026-11-01T11:40:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "WAI: data tables",
+              "url": "https://www.w3.org/WAI/tutorials/tables/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ex-11",
+      "page": "v1.html",
+      "comment": "Amounts have no currency.",
+      "createdAt": "2026-11-01T15:52:00.000Z",
+      "author": "Rui Matos",
+      "selector": "h1",
+      "point": {
+        "x": 0.9,
+        "y": 0.5
+      },
+      "resolved": true
+    },
+    {
+      "id": "ex-12",
+      "page": "v3.html",
+      "comment": "Bulk review: the blue accent is new. Check it on the pending pill too, 4.5:1 or more.",
+      "createdAt": "2026-11-09T09:30:00.000Z",
+      "agent": "claude-code",
+      "selector": "#title",
+      "links": [
+        {
+          "label": "WCAG 2.2: contrast",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+        }
+      ]
+    },
+    {
+      "id": "ex-13",
+      "page": "v3.html",
+      "comment": "Love the bigger amounts. Too big on mobile though.",
+      "createdAt": "2026-11-09T13:42:00.000Z",
+      "author": "Sam Rivera",
+      "selector": "#list .row:nth-child(1) .amt",
+      "point": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "replies": [
+        {
+          "comment": "Use clamp() so it scales down under 720px; the row already reflows there.",
+          "createdAt": "2026-11-09T14:45:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "WCAG: reflow",
+              "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ex-14",
+      "page": "v4.html",
+      "comment": "Dark header is a big change. Is this the direction?",
+      "createdAt": "2026-11-10T10:40:00.000Z",
+      "author": "Priya Nair",
+      "selector": "header",
+      "area": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+      },
+      "replies": [
+        {
+          "comment": "Exploring only. Comment freely.",
+          "createdAt": "2026-11-10T11:43:00.000Z",
+          "author": "Clara Voss"
+        }
+      ]
+    }
+  ]
+}

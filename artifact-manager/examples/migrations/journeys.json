@@ -1,0 +1,276 @@
+{
+  "id": "migrations-demo",
+  "name": "Migrations",
+  "workspace": "Acme",
+  "project": "Demos",
+  "owner": "Sam Taylor",
+  "updated": "2026-11-09",
+  "defaultJourney": "reviewer-happy",
+  "comments": true,
+  "labels": {
+    "role": "Persona"
+  },
+  "defaults": {
+    "role": "reviewer",
+    "data": "team",
+    "region": "EU"
+  },
+  "roles": {
+    "reviewer": {
+      "label": "Reviewer",
+      "user": {
+        "name": "Maya Ortiz",
+        "email": "maya@example.com"
+      }
+    },
+    "owner": {
+      "label": "Repo owner",
+      "user": {
+        "name": "Ana Costa",
+        "email": "ana@example.com"
+      }
+    }
+  },
+  "datasets": {
+    "team": {
+      "label": "Team (8 pull requests)",
+      "path": "mocks/team",
+      "format": "md"
+    },
+    "empty": {
+      "label": "First day (empty)",
+      "path": "mocks/empty"
+    },
+    "fleet": {
+      "label": "Whole fleet (500 repos)",
+      "path": "mocks/fleet"
+    }
+  },
+  "regions": [
+    "EU",
+    "US"
+  ],
+  "flags": {
+    "quickApprove": {
+      "label": "Quick approve",
+      "description": "Approve and merge inline, no dialog",
+      "default": false
+    }
+  },
+  "failures": {
+    "mergeBlocked": {
+      "label": "Merge blocked by CI",
+      "description": "POST /api/merges answers 409",
+      "method": "POST",
+      "match": "/api/merges",
+      "status": 409,
+      "body": {
+        "error": "ci_failed",
+        "message": "CI failed on main after the rebase."
+      }
+    },
+    "migrationsTimeout": {
+      "label": "Migrations API times out",
+      "description": "GET /api/migrations hangs, then 504",
+      "method": "GET",
+      "match": "/api/migrations",
+      "timeout": true,
+      "timeoutMs": 6000
+    },
+    "searchEmpty": {
+      "label": "Search finds nothing",
+      "description": "GET /api/search answers []",
+      "match": "/api/search",
+      "status": 200,
+      "body": []
+    }
+  },
+  "routes": [
+    {
+      "method": "GET",
+      "match": "/api/migrations",
+      "data": "migrations"
+    },
+    {
+      "method": "GET",
+      "match": "/api/search",
+      "data": "migrations",
+      "search": "q"
+    },
+    {
+      "method": "POST",
+      "match": "/api/merges",
+      "respond": {
+        "ok": true
+      }
+    }
+  ],
+  "journeys": [
+    {
+      "id": "reviewer-happy",
+      "label": "Reviewer, normal week",
+      "description": "The default demo: migration pull requests waiting for review.",
+      "category": "Reviewing",
+      "steps": "merge"
+    },
+    {
+      "id": "owner-own",
+      "label": "Repo owner sees their own",
+      "description": "Ana only sees migrations on the repos she owns.",
+      "role": "owner",
+      "category": "Owning"
+    },
+    {
+      "id": "first-day",
+      "label": "First day, no migrations yet",
+      "description": "The agent hasn't opened anything. Checks the empty states.",
+      "data": "empty",
+      "category": "Owning"
+    },
+    {
+      "id": "fleet",
+      "label": "Whole fleet, 500 repos",
+      "description": "Long lists, pagination, big totals.",
+      "data": "fleet",
+      "category": "Reviewing",
+      "steps": "search"
+    },
+    {
+      "id": "quick-approve",
+      "label": "New quick-approve flow",
+      "description": "Feature flag on: approve and merge inline, no dialog.",
+      "flags": {
+        "quickApprove": true
+      },
+      "category": "Reviewing",
+      "steps": "quick"
+    },
+    {
+      "id": "merge-blocked",
+      "label": "Merge blocked by CI",
+      "description": "Approve works, the merge fails because CI breaks after the rebase.",
+      "failures": [
+        "mergeBlocked"
+      ],
+      "category": "Reviewing",
+      "steps": "merge"
+    },
+    {
+      "id": "api-timeout",
+      "label": "Migrations API times out",
+      "description": "The list never loads. Checks the loading and error states.",
+      "failures": [
+        "migrationsTimeout"
+      ],
+      "category": "Resilience"
+    },
+    {
+      "id": "no-results",
+      "label": "Search with no results",
+      "description": "Every search comes back empty.",
+      "failures": [
+        "searchEmpty"
+      ],
+      "category": "Resilience",
+      "steps": "search"
+    },
+    {
+      "id": "slow-us",
+      "label": "Slow network, US runners",
+      "description": "1.5s on every call, US runners.",
+      "region": "US",
+      "network": {
+        "latencyMs": 1500
+      },
+      "category": "Resilience",
+      "steps": "merge"
+    }
+  ],
+  "iterations": [
+    {
+      "id": "v2",
+      "label": "v2 (current)",
+      "url": "index.html"
+    },
+    {
+      "id": "v1",
+      "label": "v1 (first pass)",
+      "url": "v1.html"
+    }
+  ],
+  "flows": {
+    "merge": [
+      {
+        "title": "The review queue",
+        "target": "#title",
+        "action": "look"
+      },
+      {
+        "title": "Search for billing",
+        "target": "#q",
+        "action": "type",
+        "text": "billing"
+      },
+      {
+        "title": "Review the migration",
+        "target": "text:Review",
+        "action": "click"
+      },
+      {
+        "title": "Leave a note",
+        "target": "#dlg-note",
+        "action": "type",
+        "text": "Looks good, merge it."
+      },
+      {
+        "title": "Approve and merge",
+        "target": "#dlg-ok",
+        "action": "click"
+      },
+      {
+        "title": "What the reviewer sees",
+        "target": "#banner .banner",
+        "action": "look",
+        "ms": 1800
+      }
+    ],
+    "quick": [
+      {
+        "title": "The review queue",
+        "target": "#title",
+        "action": "look"
+      },
+      {
+        "title": "Write a note inline",
+        "target": ".act input",
+        "action": "type",
+        "text": "LGTM"
+      },
+      {
+        "title": "Approve and merge in one click",
+        "target": ".act button.p",
+        "action": "click"
+      },
+      {
+        "title": "Merged",
+        "target": "#banner .banner",
+        "action": "look",
+        "ms": 1800
+      }
+    ],
+    "search": [
+      {
+        "title": "Search for a repo",
+        "target": "#q",
+        "action": "type",
+        "text": "checkout"
+      },
+      {
+        "title": "What comes back",
+        "target": "#list",
+        "action": "look",
+        "ms": 1800
+      }
+    ]
+  }
+}

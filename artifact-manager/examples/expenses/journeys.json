@@ -1,0 +1,296 @@
+{
+  "id": "expenses-demo",
+  "name": "Expenses",
+  "workspace": "Acme",
+  "project": "Demos",
+  "owner": "Sam Taylor",
+  "updated": "2026-11-06",
+  "defaultJourney": "approver-happy",
+  "comments": {
+    "file": "comments.json"
+  },
+  "labels": {
+    "role": "Persona"
+  },
+  "defaults": {
+    "role": "approver",
+    "data": "team",
+    "region": "EU"
+  },
+  "roles": {
+    "approver": {
+      "label": "Approver",
+      "user": {
+        "name": "Clara Voss",
+        "email": "clara@example.com"
+      }
+    },
+    "requester": {
+      "label": "Requester",
+      "user": {
+        "name": "Ana Costa",
+        "email": "ana@example.com"
+      }
+    }
+  },
+  "datasets": {
+    "team": {
+      "label": "Team (8 requests)",
+      "path": "mocks/team",
+      "format": "md"
+    },
+    "empty": {
+      "label": "First day (empty)",
+      "path": "mocks/empty"
+    },
+    "power": {
+      "label": "Power user (500)",
+      "path": "mocks/power"
+    }
+  },
+  "regions": [
+    "EU",
+    "US"
+  ],
+  "flags": {
+    "quickApprove": {
+      "label": "Quick approve",
+      "description": "One-click approve with an inline note",
+      "default": false
+    }
+  },
+  "failures": {
+    "payoutDeclined": {
+      "label": "Payout declined",
+      "description": "POST /api/payouts answers 402",
+      "method": "POST",
+      "match": "/api/payouts",
+      "status": 402,
+      "body": {
+        "error": "card_declined",
+        "message": "The company card was declined."
+      }
+    },
+    "requestsTimeout": {
+      "label": "Requests API times out",
+      "description": "GET /api/requests hangs, then 504",
+      "method": "GET",
+      "match": "/api/requests",
+      "timeout": true,
+      "timeoutMs": 6000
+    },
+    "searchEmpty": {
+      "label": "Search finds nothing",
+      "description": "GET /api/search answers []",
+      "match": "/api/search",
+      "status": 200,
+      "body": []
+    }
+  },
+  "routes": [
+    {
+      "method": "GET",
+      "match": "/api/requests",
+      "data": "requests"
+    },
+    {
+      "method": "GET",
+      "match": "/api/search",
+      "data": "requests",
+      "search": "q"
+    },
+    {
+      "method": "POST",
+      "match": "/api/payouts",
+      "respond": {
+        "ok": true
+      }
+    }
+  ],
+  "journeys": [
+    {
+      "id": "approver-happy",
+      "label": "Approver, normal week",
+      "description": "The default demo: a queue of pending requests to approve.",
+      "category": "Approving",
+      "steps": "approve"
+    },
+    {
+      "id": "requester-own",
+      "label": "Requester sees their own",
+      "description": "Ana only sees the requests she submitted.",
+      "role": "requester",
+      "category": "Requesting"
+    },
+    {
+      "id": "first-day",
+      "label": "First day, empty workspace",
+      "description": "No requests yet. Checks the empty states.",
+      "data": "empty",
+      "category": "Requesting"
+    },
+    {
+      "id": "power-user",
+      "label": "Power user, 500 requests",
+      "description": "Long lists, pagination, totals that get big.",
+      "data": "power",
+      "category": "Approving",
+      "steps": "search"
+    },
+    {
+      "id": "quick-approve",
+      "label": "New quick-approve flow",
+      "description": "Feature flag on: approve inline, no dialog.",
+      "flags": {
+        "quickApprove": true
+      },
+      "category": "Approving",
+      "steps": "quick"
+    },
+    {
+      "id": "payout-declined",
+      "label": "Payout declined",
+      "description": "Approve works, paying out fails with a card error.",
+      "failures": [
+        "payoutDeclined"
+      ],
+      "category": "Approving",
+      "steps": "approve",
+      "branch": {
+        "from": "approver-happy",
+        "step": 5
+      }
+    },
+    {
+      "id": "api-timeout",
+      "label": "Requests API times out",
+      "description": "The list never loads. Checks the loading and error states.",
+      "failures": [
+        "requestsTimeout"
+      ],
+      "category": "Resilience"
+    },
+    {
+      "id": "no-results",
+      "label": "Search with no results",
+      "description": "Every search comes back empty.",
+      "failures": [
+        "searchEmpty"
+      ],
+      "category": "Resilience",
+      "steps": "search"
+    },
+    {
+      "id": "slow-us",
+      "label": "Slow network, US region",
+      "description": "1.5s on every call, amounts in dollars.",
+      "region": "US",
+      "network": {
+        "latencyMs": 1500
+      },
+      "category": "Resilience",
+      "steps": "approve"
+    }
+  ],
+  "iterations": [
+    {
+      "id": "v4",
+      "label": "v4 (exploration)",
+      "url": "v4.html",
+      "status": "draft"
+    },
+    {
+      "id": "v3",
+      "label": "v3 (bulk review)",
+      "url": "v3.html",
+      "status": "changes"
+    },
+    {
+      "id": "v2",
+      "label": "v2 (current)",
+      "url": "index.html",
+      "status": "review"
+    },
+    {
+      "id": "v1",
+      "label": "v1 (first pass)",
+      "url": "v1.html",
+      "status": "closed"
+    }
+  ],
+  "flows": {
+    "approve": [
+      {
+        "title": "The approval queue",
+        "target": "#title",
+        "action": "look"
+      },
+      {
+        "title": "Search for Ana",
+        "target": "#q",
+        "action": "type",
+        "text": "Ana"
+      },
+      {
+        "title": "Review her request",
+        "target": "text:Review",
+        "action": "click"
+      },
+      {
+        "title": "Leave a note",
+        "target": "#dlg-note",
+        "action": "type",
+        "text": "Approved, thanks!"
+      },
+      {
+        "title": "Approve and pay out",
+        "target": "#dlg-ok",
+        "action": "click"
+      },
+      {
+        "title": "What the approver sees",
+        "target": "#banner .banner",
+        "action": "look",
+        "ms": 1800
+      }
+    ],
+    "quick": [
+      {
+        "title": "The approval queue",
+        "target": "#title",
+        "action": "look"
+      },
+      {
+        "title": "Write a note inline",
+        "target": ".act input",
+        "action": "type",
+        "text": "OK"
+      },
+      {
+        "title": "Approve in one click",
+        "target": ".act button.p",
+        "action": "click"
+      },
+      {
+        "title": "Paid out",
+        "target": "#banner .banner",
+        "action": "look",
+        "ms": 1800
+      }
+    ],
+    "search": [
+      {
+        "title": "Search for a request",
+        "target": "#q",
+        "action": "type",
+        "text": "Travel"
+      },
+      {
+        "title": "What comes back",
+        "target": "#list",
+        "action": "look",
+        "ms": 1800
+      }
+    ]
+  }
+}

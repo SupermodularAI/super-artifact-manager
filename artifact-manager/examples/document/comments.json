@@ -1,0 +1,184 @@
+{
+  "comments": [
+    {
+      "id": "do-01",
+      "page": "index.html",
+      "comment": "Lead with the one-line rule: \"Your manager approves; finance too above 500 €\".",
+      "createdAt": "2026-11-03T09:48:00.000Z",
+      "author": "Sam Rivera",
+      "selector": "section.page:nth-of-type(1) .lede",
+      "quote": "when a payout happens",
+      "replies": [
+        {
+          "comment": "Suggested lede: \"Your manager approves every request; finance also approves anything above 500 €. Approved requests are paid at 14:00 on weekdays.\"",
+          "createdAt": "2026-11-03T10:51:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "Plain language",
+              "url": "https://www.plainlanguage.gov/guidelines/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "do-02",
+      "page": "index.html",
+      "comment": "Goals are good. Add a measurable target: median time to approval under 1 day.",
+      "createdAt": "2026-11-04T11:01:00.000Z",
+      "author": "Clara Voss",
+      "selector": "section.page:nth-of-type(1) .g2 .card:first-child",
+      "point": {
+        "x": 0.8,
+        "y": 0.2
+      }
+    },
+    {
+      "id": "do-03",
+      "page": "index.html",
+      "comment": "The limits table has no caption. Add one so it reads on its own, and mark the amounts column as numeric.",
+      "createdAt": "2026-11-04T15:13:00.000Z",
+      "agent": "claude-code",
+      "selector": "section.page:nth-of-type(2) table",
+      "links": [
+        {
+          "label": "WAI: data tables",
+          "url": "https://www.w3.org/WAI/tutorials/tables/"
+        }
+      ],
+      "replies": [
+        {
+          "comment": "Caption: \"Who approves, by amount\".",
+          "createdAt": "2026-11-05T09:02:00.000Z",
+          "author": "Sam Rivera"
+        }
+      ]
+    },
+    {
+      "id": "do-04",
+      "page": "index.html",
+      "comment": "Who approves a raised limit? Finance, or the team lead's manager?",
+      "createdAt": "2026-11-05T10:05:00.000Z",
+      "author": "Ana Costa",
+      "selector": "section.page:nth-of-type(2) .g2 .card:first-child p",
+      "quote": "raise their own limit up to 2,000 €",
+      "replies": [
+        {
+          "comment": "Finance. We will spell it out.",
+          "createdAt": "2026-11-05T12:11:00.000Z",
+          "author": "Clara Voss"
+        },
+        {
+          "comment": "Then: \"Team leads can raise their own limit up to 2,000 €; finance approves the change and sees every one.\"",
+          "createdAt": "2026-11-05T12:11:00.000Z",
+          "agent": "claude-code"
+        }
+      ]
+    },
+    {
+      "id": "do-05",
+      "page": "index.html",
+      "comment": "This flow is the clearest part of the spec. Use it in the onboarding too.",
+      "createdAt": "2026-11-06T09:09:00.000Z",
+      "author": "Jonas Weber",
+      "selector": "section.page:nth-of-type(3) .flow",
+      "area": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+      }
+    },
+    {
+      "id": "do-06",
+      "page": "index.html",
+      "comment": "24 hours is long for a declined card. Most retries succeed within minutes; consider 1 hour, then 24.",
+      "createdAt": "2026-11-06T14:24:00.000Z",
+      "agent": "claude-code",
+      "selector": "section.page:nth-of-type(3) blockquote",
+      "quote": "after 24 hours",
+      "links": [
+        {
+          "label": "WCAG: status messages",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html"
+        }
+      ]
+    },
+    {
+      "id": "do-07",
+      "page": "index.html",
+      "comment": "Partial approval: yes please. Hotel yes, dinner no happens every week.",
+      "createdAt": "2026-11-07T10:19:00.000Z",
+      "author": "Priya Nair",
+      "selector": "section.page:nth-of-type(4) .card.q",
+      "point": {
+        "x": 0.95,
+        "y": 0.3
+      },
+      "replies": [
+        {
+          "comment": "Moved to v3 scope.",
+          "createdAt": "2026-11-07T11:22:00.000Z",
+          "author": "Sam Rivera"
+        }
+      ],
+      "resolved": true
+    },
+    {
+      "id": "do-08",
+      "page": "v1.html",
+      "comment": "1,000 € is too high for a single approver.",
+      "createdAt": "2026-11-01T09:34:00.000Z",
+      "author": "Clara Voss",
+      "selector": "section.page:nth-of-type(2) table",
+      "area": {
+        "x": 0.0,
+        "y": 0.3,
+        "w": 1.0,
+        "h": 0.7
+      },
+      "replies": [
+        {
+          "comment": "v2 lowers it to 500 €, in line with the finance policy.",
+          "createdAt": "2026-11-01T10:37:00.000Z",
+          "agent": "claude-code"
+        }
+      ],
+      "resolved": true
+    },
+    {
+      "id": "do-09",
+      "page": "v3.html",
+      "comment": "750 € contradicts the policy page, which still says 500 €. Pick one.",
+      "createdAt": "2026-11-09T10:33:00.000Z",
+      "agent": "claude-code",
+      "selector": "section.page:nth-of-type(2) table",
+      "links": [
+        {
+          "label": "Plain language",
+          "url": "https://www.plainlanguage.gov/guidelines/"
+        }
+      ]
+    },
+    {
+      "id": "do-10",
+      "page": "v4.html",
+      "comment": "Audit trail is new. Who can export it, finance only?",
+      "createdAt": "2026-11-10T09:37:00.000Z",
+      "author": "Ana Costa",
+      "selector": "section.page:nth-of-type(5) table",
+      "point": {
+        "x": 0.7,
+        "y": 0.6
+      },
+      "replies": [
+        {
+          "comment": "Finance and auditors. Add an \"Exported by\" event so exports are logged too.",
+          "createdAt": "2026-11-10T10:40:00.000Z",
+          "agent": "claude-code"
+        }
+      ]
+    }
+  ]
+}

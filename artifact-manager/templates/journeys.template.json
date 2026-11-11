@@ -1,0 +1,24 @@
+{
+  "id": "PROTOTYPE_ID",
+  "name": "PROTOTYPE_NAME",
+  "defaultJourney": "happy-path",
+  "defaults": { "role": "user", "data": "default" },
+
+  "roles": {
+    "user": { "label": "User", "user": { "name": "Sam Rivera" } }
+  },
+
+  "datasets": {
+    "default": { "label": "Default data", "path": "mocks/default" },
+    "empty":   { "label": "Empty",        "path": "mocks/empty" }
+  },
+
+  "flags": {},
+  "failures": {},
+  "routes": [],
+
+  "journeys": [
+    { "id": "happy-path", "label": "Happy path", "description": "The default demo." },
+    { "id": "empty",      "label": "First time, nothing yet", "description": "Empty states.", "data": "empty" }
+  ]
+}

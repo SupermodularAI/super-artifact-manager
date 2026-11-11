@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Migrations · v2</title>
+<!-- artifact-manager: before the prototype's own scripts -->
+<script src="../../control-panel.js" data-config="journeys.json"></script>
+<script>window.SM_ANNOTATE_PLUGIN = true; window.SM_ARTEFACT_KEY = 'migrations-demo';</script>
+<script src="../../../annotate/annotator.js" defer></script>
+<style>
+:root{--bg:#f2f2f2;--card:#fff;--line:#d8d8d8;--fg:#000;--mut:#3c3c3c;--dim:#6b6b6b;--primary:#2563eb;--on-primary:#fff;
+  --ok:#2b8d17;--ok-bg:#ecffe5;--bad:#9e2530;--bad-bg:#ffe8eb;--warn:#b07100;--warn-bg:#fff8e1;--sans:"Denim INK",ui-sans-serif,system-ui,sans-serif;--mono:"Aeonik Fono",ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 var(--sans)}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--line);background:var(--card)}
+.brand{display:flex;align-items:center;gap:12px}
+header h1{font-size:18px;font-weight:600;margin:0}
+.who{display:flex;align-items:center;gap:10px;color:var(--mut);font-size:13px}
+.who .rg{font:12px var(--mono);color:var(--dim)}
+.av{width:30px;height:30px;border-radius:50%;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-size:12px;font-weight:600}
+main{max-width:1000px;margin:0 auto;padding:28px 20px 120px}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.top h2{margin:0;font-size:24px;font-weight:600}
+.sum{color:var(--mut);font-size:13px}
+input[type=search]{height:40px;border:1px solid var(--line);border-radius:16px;padding:0 14px;min-width:260px;font:inherit;background:var(--card);color:var(--fg);outline:none}
+input[type=search]:focus,textarea:focus,.act input:focus{border-color:var(--primary)}
+.list{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.row{display:grid;grid-template-columns:84px 1fr 130px 110px 96px 180px;gap:12px;align-items:center;padding:14px 18px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .id,.row .diff,.row .tests{font:12px var(--mono);color:var(--dim)}
+.row .diff b{color:var(--ok);font-weight:400}.row .diff i{color:var(--bad);font-style:normal}
+.row .tests.bad{color:var(--bad)}
+.row .repo{font-weight:600}
+.st{font-size:12px;padding:2px 10px;border-radius:999px;border:1px solid var(--line);justify-self:start;white-space:nowrap}
+.st.ready{color:var(--warn);border-color:#ffdd9a;background:var(--warn-bg)}.st.merged{color:var(--ok);border-color:#b8ff9f;background:var(--ok-bg)}.st.failed{color:var(--bad);border-color:#fe9da7;background:var(--bad-bg)}
+.act{display:flex;gap:6px;justify-content:flex-end}
+.act input{width:90px;height:32px;border:1px solid var(--line);border-radius:16px;padding:0 10px;font:inherit;font-size:12px;background:var(--card);color:var(--fg);outline:none}
+button{height:34px;border-radius:16px;border:1px solid var(--line);background:transparent;color:var(--fg);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:0 14px}
+button.p{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+button:disabled{opacity:.4;cursor:default}
+.state{padding:56px 20px;text-align:center;color:var(--mut)}
+.state b{display:block;color:var(--fg);font-size:17px;margin-bottom:4px}
+.spin{width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--primary);border-radius:50%;margin:0 auto 12px;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.banner{border-radius:16px;padding:12px 16px;margin-bottom:14px;font-size:14px}
+.banner.bad{background:var(--bad-bg);border:1px solid #fe9da7;color:var(--bad)}
+.banner.ok{background:var(--ok-bg);border:1px solid #b8ff9f;color:var(--ok)}
+.pager{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px;color:var(--mut);font-size:13px}
+dialog{border:1px solid var(--line);border-radius:24px;padding:24px;max-width:420px;background:var(--card);color:var(--fg)}
+dialog::backdrop{background:rgba(0,0,0,.3)}
+dialog h3{margin:0 0 6px;font-size:18px}
+dialog textarea{width:100%;min-height:76px;border:1px solid var(--line);border-radius:16px;padding:10px 12px;font:inherit;margin:12px 0;background:var(--card);color:var(--fg);outline:none}
+.flag{font-size:11px;background:var(--primary);color:var(--on-primary);border-radius:999px;padding:2px 8px;margin-left:8px;vertical-align:middle;font-weight:600}
+@media (max-width:760px){.row{grid-template-columns:1fr auto}.row .id,.row .diff,.row .tests,.row .st{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><h1>Migrations</h1></div>
+  <div class="who"><span class="rg" id="region"></span><span id="uname"></span><span class="av" id="av"></span></div>
+</header>
+<main>
+  <div class="top">
+    <div><h2 id="title"></h2><div class="sum" id="sum"></div></div>
+    <input type="search" id="q" placeholder="Search repos" aria-label="Search repos">
+  </div>
+  <div id="banner"></div>
+  <div class="list" id="list"></div>
+  <div class="pager" id="pager"></div>
+</main>
+<dialog id="dlg"><form method="dialog">
+  <h3>Merge <span id="dlg-id"></span>?</h3>
+  <div class="sum" id="dlg-sum"></div>
+  <textarea id="dlg-note" placeholder="Note for the repo owner (optional)"></textarea>
+  <div class="act"><button value="cancel">Cancel</button><button class="p" value="ok" id="dlg-ok">Approve and merge</button></div>
+</form></dialog>
+
+<script>
+// The prototype only knows SMProto.user / role / region / flag() and calls its
+// normal API. The control panel decides what that API answers.
+const P = window.SMProto;
+const user = P.user, reviewer = P.role === 'reviewer', quick = P.flag('quickApprove');
+const $ = id => document.getElementById(id);
+const PAGE = 25;
+let rows = [], page = 0;
+
+$('uname').textContent = user.name;
+$('av').textContent = user.name.split(' ').map(s => s[0]).join('');
+$('region').textContent = P.region === 'US' ? 'US runners' : 'EU runners';
+$('title').innerHTML = reviewer ? 'Waiting for your review' : 'Migrations on my repos';
+if (quick) $('title').insertAdjacentHTML('beforeend', '<span class="flag">Quick approve</span>');
+
+function state(html) { $('list').innerHTML = '<div class="state">' + html + '</div>'; $('pager').textContent = ''; }
+function banner(kind, text) { $('banner').innerHTML = text ? '<div class="banner ' + kind + '" role="status">' + text + '</div>' : ''; }
+
+async function load(q) {
+  state('<div class="spin"></div>Loading migrations…');
+  try {
+    const res = await fetch(q ? '/api/search?q=' + encodeURIComponent(q) : '/api/migrations');
+    if (!res.ok) throw new Error(res.status === 504 ? 'The migrations service took too long to answer.' : 'Something went wrong (' + res.status + ').');
+    const all = await res.json();
+    rows = reviewer ? all.filter(r => r.status === 'ready' || q) : all.filter(r => r.owner === user.name);
+    page = 0; render(q);
+  } catch (e) {
+    state('<b>Couldn\'t load migrations</b>' + (e instanceof TypeError ? 'You seem to be offline.' : e.message) + '<br><br><button onclick="load()">Try again</button>');
+  }
+}
+
+function render(q) {
+  const files = rows.reduce((s, r) => s + r.added + r.removed, 0);
+  $('sum').textContent = rows.length + (rows.length === 1 ? ' pull request' : ' pull requests') + ' · ' + files.toLocaleString('en') + ' lines changed';
+  if (!rows.length) {
+    state(q ? '<b>No repos match "' + q.replace(/[<>&]/g, '') + '"</b>Try a repo name, a framework or an ID.'
+      : reviewer ? '<b>Nothing to review</b>When the migration agent opens a pull request it shows up here.'
+      : '<b>No migrations yet</b>Pick a target version and the agent starts on your repos.');
+    return;
+  }
+  const label = { ready: 'Ready for Review', merged: 'Merged', failed: 'Checks Failed' };
+  const slice = rows.slice(page * PAGE, page * PAGE + PAGE);
+  $('list').innerHTML = slice.map(r => `
+    <div class="row" data-id="${r.id}">
+      <span class="id">${r.id}</span>
+      <span><span class="repo">${r.repo}</span><br><span class="sum">${r.migration}${reviewer ? ' · ' + r.owner : ''}${r.note ? ' · ' + r.note : ''}</span></span>
+      <span class="st ${r.status}">${label[r.status]}</span>
+      <span class="diff"><b>+${r.added}</b> <i>-${r.removed}</i></span>
+      <span class="tests ${r.status === 'failed' ? 'bad' : ''}">${r.tests}</span>
+      <span class="act">${reviewer && r.status === 'ready'
+        ? (quick ? '<input placeholder="Note" aria-label="Note"><button class="p" data-approve="' + r.id + '">Merge</button>' : '<button class="p" data-review="' + r.id + '">Review</button>')
+        : ''}</span>
+    </div>`).join('');
+  const pages = Math.ceil(rows.length / PAGE);
+  $('pager').innerHTML = pages > 1 ? `Page ${page + 1} of ${pages} <button ${page ? '' : 'disabled'} data-pg="-1">Previous</button><button ${page < pages - 1 ? '' : 'disabled'} data-pg="1">Next</button>` : '';
+}
+
+async function approve(id, note) {
+  banner('', '');
+  const r = rows.find(x => x.id === id);
+  try {
+    const res = await fetch('/api/merges', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id, note }) });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) { banner('bad', '<b>Approved, but the merge was blocked.</b> ' + (body.message || 'Error ' + res.status) + ' The agent is fixing it and will ask you again.'); return; }
+    banner('ok', 'Approved and merged ' + r.repo + ' (' + r.migration + '). ' + r.owner + ' has been told.');
+    rows = rows.filter(x => x.id !== id); render();
+  } catch (e) { banner('bad', 'You seem to be offline. Nothing was merged.'); }
+}
+
+document.addEventListener('click', e => {
+  const t = e.target;
+  if (t.dataset.pg) { page += +t.dataset.pg; render(); }
+  if (t.dataset.approve) approve(t.dataset.approve, t.previousElementSibling.value);
+  if (t.dataset.review) {
+    const r = rows.find(x => x.id === t.dataset.review);
+    $('dlg-id').textContent = r.repo; $('dlg-sum').textContent = r.id + ' · ' + r.migration + ' · tests ' + r.tests;
+    $('dlg-note').value = ''; $('dlg').returnValue = ''; $('dlg').showModal();
+    $('dlg').onclose = () => { if ($('dlg').returnValue === 'ok') approve(r.id, $('dlg-note').value); };
+  }
+});
+let tq; $('q').addEventListener('input', e => { clearTimeout(tq); tq = setTimeout(() => load(e.target.value.trim()), 250); });
+load();
+</script>
+</body>
+</html>

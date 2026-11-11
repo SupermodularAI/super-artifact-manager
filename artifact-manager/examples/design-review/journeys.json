@@ -1,0 +1,105 @@
+{
+  "id": "design-review",
+  "name": "Billing settings",
+  "workspace": "Acme",
+  "project": "Acme Cloud",
+  "owner": "Clara Voss",
+  "updated": "2026-11-11",
+  "comments": {
+    "file": "comments.json"
+  },
+  "journeys": [
+    {
+      "id": "review",
+      "label": "Design system review",
+      "description": "Walk the screen section by section, the way Claude Code reviewed it.",
+      "category": "Review",
+      "steps": "review"
+    },
+    {
+      "id": "payment",
+      "label": "Update payment details",
+      "description": "Fill in the VAT number and country.",
+      "category": "Review",
+      "steps": [
+        {
+          "title": "VAT number",
+          "target": "#vat",
+          "action": "type",
+          "text": "PT12345"
+        },
+        {
+          "title": "The error",
+          "target": "#vat-error",
+          "action": "look"
+        },
+        {
+          "title": "Country",
+          "target": "#country",
+          "action": "look"
+        },
+        {
+          "title": "Pay automatically",
+          "target": "#autopay",
+          "action": "look",
+          "ms": 1500
+        }
+      ]
+    }
+  ],
+  "iterations": [
+    {
+      "id": "v2",
+      "label": "v2 (proposed)",
+      "url": "v2.html",
+      "status": "draft"
+    },
+    {
+      "id": "v1",
+      "label": "v1 (in review)",
+      "url": "index.html",
+      "status": "changes"
+    }
+  ],
+  "flows": {
+    "review": [
+      {
+        "title": "The plan card",
+        "target": "#plan",
+        "action": "look"
+      },
+      {
+        "title": "Plan actions",
+        "target": "#plan-actions",
+        "action": "look"
+      },
+      {
+        "title": "Usage",
+        "target": "#usage",
+        "action": "look"
+      },
+      {
+        "title": "Payment details",
+        "target": "#vat",
+        "action": "type",
+        "text": "PT12345"
+      },
+      {
+        "title": "Country",
+        "target": "#country",
+        "action": "look"
+      },
+      {
+        "title": "Invoices",
+        "target": "#inv-table",
+        "action": "look"
+      },
+      {
+        "title": "Cancel plan",
+        "target": "#cancel",
+        "action": "look",
+        "ms": 1500
+      }
+    ]
+  }
+}

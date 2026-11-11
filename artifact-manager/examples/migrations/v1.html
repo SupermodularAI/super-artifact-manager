@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Migrations · v1</title>
+<script src="../../control-panel.js" data-config="journeys.json"></script>
+<style>
+body{margin:0;background:#fff;color:#000;font:14px/1.45 "Aeonik Fono",ui-monospace,monospace;padding:32px}
+h1{font-size:22px;margin:0 0 4px;font-weight:400}
+p{color:#6b6b6b;margin:0 0 20px}
+table{border-collapse:collapse;width:100%;max-width:860px}
+td,th{border-bottom:1px solid #d8d8d8;padding:8px 6px;text-align:left;font-weight:400}
+th{color:#6b6b6b}
+</style>
+</head>
+<body>
+<h1>Migrations (first pass)</h1>
+<p id="who"></p>
+<table><thead><tr><th>ID</th><th>Repo</th><th>Migration</th><th>Owner</th><th>Status</th><th>Tests</th></tr></thead><tbody id="t"><tr><td colspan="6">Loading…</td></tr></tbody></table>
+<script>
+const P = window.SMProto;
+document.getElementById('who').textContent = 'Signed in as ' + P.user.name + ' (' + P.role + ')';
+fetch('/api/migrations').then(r => r.ok ? r.json() : Promise.reject(r.status)).then(rows => {
+  if (P.role === 'owner') rows = rows.filter(r => r.owner === P.user.name);
+  document.getElementById('t').innerHTML = rows.slice(0, 50).map(r => `<tr><td>${r.id}</td><td>${r.repo}</td><td>${r.migration}</td><td>${r.owner}</td><td>${r.status}</td><td>${r.tests}</td></tr>`).join('') || '<tr><td colspan="6">No migrations.</td></tr>';
+}).catch(e => { document.getElementById('t').innerHTML = '<tr><td colspan="6">Error: ' + e + '</td></tr>'; });
+</script>
+</body>
+</html>

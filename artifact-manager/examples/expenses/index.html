@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Expenses (v2) · Super Artifact Manager (Prototype)</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<!-- artifact-manager: before the prototype's own scripts -->
+<script src="../../control-panel.js" data-config="journeys.json"></script>
+<!-- /annotate in plugin mode; the control panel's widget drives it (one FAB).
+     Served from the skills folder: npm run demo. -->
+<script>window.SM_ANNOTATE_PLUGIN = true; window.SM_ARTEFACT_KEY = 'expenses-demo';</script>
+<script src="../../../annotate/annotator.js" defer></script>
+<style>
+:root{--bg:#f6f5f1;--card:#fff;--fg:#151515;--mut:#6b6b66;--line:#e6e4dd;--acc:#151515;--ok:#1f7a3a;--bad:#b42318;--warn:#8a5a00}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--line);background:var(--card)}
+header h1{font-size:18px;margin:0}
+.who{display:flex;align-items:center;gap:10px;color:var(--mut);font-size:13px}
+.av{width:30px;height:30px;border-radius:50%;background:#151515;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:600}
+main{max-width:960px;margin:0 auto;padding:24px 20px 120px}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}
+.top h2{margin:0;font-size:22px}
+.sum{color:var(--mut);font-size:13px}
+input[type=search]{height:38px;border:1px solid var(--line);border-radius:10px;padding:0 12px;min-width:260px;font:inherit;background:#fff}
+.list{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.row{display:grid;grid-template-columns:110px 1fr 120px 110px 170px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .id{font:12px ui-monospace,monospace;color:var(--mut)}
+.row .amt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.st{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);justify-self:start}
+.st.pending{color:var(--warn);border-color:#ecd9a8;background:#fdf6e3}.st.approved,.st.paid{color:var(--ok);border-color:#bfe0c7;background:#eef8f0}.st.rejected{color:var(--bad);border-color:#f0c5c0;background:#fdf0ee}
+.act{display:flex;gap:6px;justify-content:flex-end}
+.act input{width:90px;height:30px;border:1px solid var(--line);border-radius:8px;padding:0 8px;font:inherit;font-size:12px}
+button{height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;font:inherit;font-size:13px;cursor:pointer;padding:0 12px}
+button.p{background:var(--acc);color:#fff;border-color:var(--acc)}
+button:disabled{opacity:.5;cursor:default}
+.state{padding:48px 20px;text-align:center;color:var(--mut)}
+.state b{display:block;color:var(--fg);font-size:17px;margin-bottom:4px}
+.spin{width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--fg);border-radius:50%;margin:0 auto 12px;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.banner{border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:14px}
+.banner.bad{background:#fdf0ee;border:1px solid #f0c5c0;color:var(--bad)}
+.banner.ok{background:#eef8f0;border:1px solid #bfe0c7;color:var(--ok)}
+.pager{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px;color:var(--mut);font-size:13px}
+dialog{border:1px solid var(--line);border-radius:14px;padding:22px;max-width:380px}
+dialog::backdrop{background:rgba(0,0,0,.3)}
+dialog h3{margin:0 0 6px}
+dialog textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;margin:10px 0}
+.flag{font-size:11px;background:#151515;color:#fff;border-radius:999px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+@media (max-width:720px){.row{grid-template-columns:1fr auto;}.row .cat,.row .id{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Expenses</h1>
+  <div class="who"><span id="region"></span><span id="uname"></span><span class="av" id="av"></span></div>
+</header>
+<main>
+  <div class="top">
+    <div><h2 id="title"></h2><div class="sum" id="sum"></div></div>
+    <input type="search" id="q" placeholder="Search requests" aria-label="Search requests">
+  </div>
+  <div id="banner"></div>
+  <div class="list" id="list"></div>
+  <div class="pager" id="pager"></div>
+</main>
+<dialog id="dlg"><form method="dialog">
+  <h3>Approve <span id="dlg-id"></span>?</h3>
+  <div class="sum" id="dlg-sum"></div>
+  <textarea id="dlg-note" placeholder="Note for the requester (optional)"></textarea>
+  <div class="act"><button value="cancel">Cancel</button><button class="p" value="ok" id="dlg-ok">Approve and pay out</button></div>
+</form></dialog>
+
+<script>
+// The prototype only knows about SMProto.user / role / region / flag(), and
+// calls its normal API. The control panel decides what that API answers.
+const P = window.SMProto;
+const user = P.user, approver = P.role === 'approver', quick = P.flag('quickApprove');
+const money = n => new Intl.NumberFormat(P.region === 'US' ? 'en-US' : 'pt-PT', { style: 'currency', currency: P.region === 'US' ? 'USD' : 'EUR', maximumFractionDigits: 0 }).format(P.region === 'US' ? Math.round(n * 1.08) : n);
+const $ = id => document.getElementById(id);
+const PAGE = 25;
+let rows = [], page = 0;
+
+$('uname').textContent = user.name;
+$('av').textContent = user.name.split(' ').map(s => s[0]).join('');
+$('region').textContent = P.region === 'US' ? 'United States' : 'Europe';
+$('title').innerHTML = approver ? 'Waiting for your approval' : 'My requests';
+if (quick) $('title').insertAdjacentHTML('beforeend', '<span class="flag">Quick approve</span>');
+
+function state(html) { $('list').innerHTML = '<div class="state">' + html + '</div>'; $('pager').textContent = ''; }
+function banner(kind, text) { $('banner').innerHTML = text ? '<div class="banner ' + kind + '" role="status">' + text + '</div>' : ''; }
+
+async function load(q) {
+  state('<div class="spin"></div>Loading requests…');
+  try {
+    const res = await fetch(q ? '/api/search?q=' + encodeURIComponent(q) : '/api/requests');
+    if (!res.ok) throw new Error(res.status === 504 ? 'The requests service took too long to answer.' : 'Something went wrong (' + res.status + ').');
+    let all = await res.json();
+    rows = approver ? all.filter(r => r.status === 'pending' || q) : all.filter(r => r.requester === user.name);
+    page = 0; render(q);
+  } catch (e) {
+    state('<b>Couldn\'t load requests</b>' + (e instanceof TypeError ? 'You seem to be offline.' : e.message) + '<br><br><button onclick="load()">Try again</button>');
+  }
+}
+
+function render(q) {
+  const total = rows.reduce((s, r) => s + r.amount, 0);
+  $('sum').textContent = rows.length + (rows.length === 1 ? ' request' : ' requests') + ' · ' + money(total);
+  if (!rows.length) {
+    state(q ? '<b>No requests match "' + q.replace(/[<>&]/g, '') + '"</b>Try a name, a category or an ID.'
+      : approver ? '<b>Nothing to approve</b>When your team submits expenses they show up here.'
+      : '<b>No requests yet</b>Submit your first expense and it will show up here.');
+    return;
+  }
+  const slice = rows.slice(page * PAGE, page * PAGE + PAGE);
+  $('list').innerHTML = slice.map(r => `
+    <div class="row" data-id="${r.id}">
+      <span class="id">${r.id}</span>
+      <span><b>${approver ? r.requester : r.category}</b><br><span class="sum">${approver ? r.category : r.submitted}${r.note ? ' · ' + r.note : ''}</span></span>
+      <span class="st ${r.status}">${r.status}</span>
+      <span class="amt">${money(r.amount)}</span>
+      <span class="act">${approver && r.status === 'pending'
+        ? (quick ? '<input placeholder="Note" aria-label="Note"><button class="p" data-approve="' + r.id + '">Approve</button>' : '<button class="p" data-review="' + r.id + '">Review</button>')
+        : ''}</span>
+    </div>`).join('');
+  const pages = Math.ceil(rows.length / PAGE);
+  $('pager').innerHTML = pages > 1 ? `Page ${page + 1} of ${pages} <button ${page ? '' : 'disabled'} data-pg="-1">Previous</button><button ${page < pages - 1 ? '' : 'disabled'} data-pg="1">Next</button>` : '';
+}
+
+async function approve(id, note) {
+  banner('', '');
+  const r = rows.find(x => x.id === id);
+  try {
+    const res = await fetch('/api/payouts', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id, note }) });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) { banner('bad', '<b>Approved, but the payout failed.</b> ' + (body.message || 'Error ' + res.status) + ' Finance has been told.'); return; }
+    r.status = 'paid';
+    banner('ok', 'Approved and paid out ' + money(r.amount) + ' to ' + r.requester + '.');
+    rows = rows.filter(x => x.id !== id); render();
+  } catch (e) { banner('bad', 'You seem to be offline. Nothing was approved.'); }
+}
+
+document.addEventListener('click', e => {
+  const t = e.target;
+  if (t.dataset.pg) { page += +t.dataset.pg; render(); }
+  if (t.dataset.approve) approve(t.dataset.approve, t.previousElementSibling.value);
+  if (t.dataset.review) {
+    const r = rows.find(x => x.id === t.dataset.review);
+    $('dlg-id').textContent = r.id; $('dlg-sum').textContent = r.requester + ' · ' + r.category + ' · ' + money(r.amount);
+    $('dlg-note').value = ''; $('dlg').returnValue = ''; $('dlg').showModal();
+    $('dlg').onclose = () => { if ($('dlg').returnValue === 'ok') approve(r.id, $('dlg-note').value); };
+  }
+});
+let tq; $('q').addEventListener('input', e => { clearTimeout(tq); tq = setTimeout(() => load(e.target.value.trim()), 250); });
+load();
+</script>
+</body>
+</html>

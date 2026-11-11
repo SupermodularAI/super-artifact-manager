@@ -1,0 +1,477 @@
+{
+  "comments": [
+    {
+      "id": "ds-01",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Two primary buttons in one card. Acme UI allows one primary action per view: keep \"Upgrade to Pro\" as Button variant=\"primary\" and make \"Save changes\" variant=\"secondary\".",
+      "createdAt": "2026-11-11T09:02:00.000Z",
+      "selector": "#plan-actions",
+      "links": [
+        {
+          "label": "Acme UI: Button, hierarchy",
+          "url": "https://ui.acme.example/components/button#hierarchy"
+        }
+      ],
+      "area": {
+        "x": 0,
+        "y": 0,
+        "w": 0.62,
+        "h": 1
+      },
+      "replies": [
+        {
+          "author": "Clara Voss",
+          "comment": "Save is the main action on this page though?",
+          "createdAt": "2026-11-11T09:20:00.000Z"
+        },
+        {
+          "agent": "claude-code",
+          "comment": "On the plan card the main action is the upgrade. Save belongs at the bottom of the form it saves, as a secondary button.",
+          "createdAt": "2026-11-11T09:21:00.000Z",
+          "links": [
+            {
+              "label": "Acme UI: Forms, actions",
+              "url": "https://ui.acme.example/patterns/forms#actions"
+            }
+          ]
+        },
+        {
+          "author": "Clara Voss",
+          "comment": "Fair. Moving it.",
+          "createdAt": "2026-11-11T09:30:00.000Z"
+        }
+      ],
+      "proposal": {
+        "current": "proposals/ds-01-current.png",
+        "proposed": "proposals/ds-01-proposed.png",
+        "caption": "<Button variant=\"primary\">Upgrade to Pro</Button>\n<Button variant=\"ghost\">Compare plans</Button>\n\"Save changes\" moves to the end of the payment form, variant=\"secondary\""
+      }
+    },
+    {
+      "id": "ds-02",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "\"Compare plans\" uses a hard-coded #2563eb and a pill radius. Use Button variant=\"ghost\" with the default radius (radius-sm, 8px); raw hex values bypass theming and dark mode.",
+      "createdAt": "2026-11-11T09:04:00.000Z",
+      "selector": "#compare",
+      "links": [
+        {
+          "label": "Acme UI: Button, variants",
+          "url": "https://ui.acme.example/components/button#variants"
+        },
+        {
+          "label": "Acme UI: Color tokens",
+          "url": "https://ui.acme.example/foundations/color#tokens"
+        }
+      ],
+      "point": {
+        "x": 0.9,
+        "y": 0.2
+      },
+      "proposal": {
+        "current": "proposals/ds-02-current.png",
+        "proposed": "proposals/ds-02-proposed.png",
+        "caption": "<Button variant=\"ghost\">Compare plans</Button>"
+      }
+    },
+    {
+      "id": "ds-03",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "This card uses radius 6px and 18px padding. Card is radius 12px with 24px padding (space-6). The other cards on the page already do.",
+      "createdAt": "2026-11-11T09:06:00.000Z",
+      "selector": "#plan",
+      "links": [
+        {
+          "label": "Acme UI: Card",
+          "url": "https://ui.acme.example/components/card#anatomy"
+        },
+        {
+          "label": "Acme UI: Spacing scale",
+          "url": "https://ui.acme.example/foundations/spacing"
+        }
+      ],
+      "point": {
+        "x": 0.98,
+        "y": 0.04
+      },
+      "proposal": {
+        "current": "proposals/ds-03-current.png",
+        "proposed": "proposals/ds-03-proposed.png",
+        "caption": "<Card padding={6}> (radius 12px, 24px padding)"
+      }
+    },
+    {
+      "id": "ds-04",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Heading jumps from h1 to h4, and 22px is not on the type scale. Use Heading level={2} size=\"lg\" (20px).",
+      "createdAt": "2026-11-11T09:08:00.000Z",
+      "selector": "#plan-title",
+      "links": [
+        {
+          "label": "Acme UI: Typography, scale",
+          "url": "https://ui.acme.example/foundations/typography#scale"
+        },
+        {
+          "label": "Acme UI: Heading",
+          "url": "https://ui.acme.example/components/heading"
+        }
+      ],
+      "quote": "Team plan",
+      "proposal": {
+        "current": "proposals/ds-04-current.png",
+        "proposed": "proposals/ds-04-proposed.png",
+        "caption": "<Heading level={2} size=\"lg\">Team plan</Heading>"
+      }
+    },
+    {
+      "id": "ds-05",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Usage bars use a custom cyan to purple gradient and have no accessible value. Use ProgressBar with tone=\"neutral\", which also exposes aria-valuenow. Switch to tone=\"warning\" above 80%.",
+      "createdAt": "2026-11-11T09:10:00.000Z",
+      "selector": "#usage",
+      "links": [
+        {
+          "label": "Acme UI: ProgressBar",
+          "url": "https://ui.acme.example/components/progress-bar#tones"
+        }
+      ],
+      "area": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      "replies": [
+        {
+          "author": "Rui Matos",
+          "comment": "The gradient was a brand request for the launch.",
+          "createdAt": "2026-11-11T09:40:00.000Z"
+        },
+        {
+          "agent": "claude-code",
+          "comment": "Then it needs a token first: request a \"brand-gradient\" token in #design-system, and ProgressBar can take it as a tone.",
+          "createdAt": "2026-11-11T09:42:00.000Z",
+          "links": [
+            {
+              "label": "Acme UI: Requesting a token",
+              "url": "https://ui.acme.example/contributing/tokens"
+            }
+          ]
+        }
+      ],
+      "proposal": {
+        "current": "proposals/ds-05-current.png",
+        "proposed": "proposals/ds-05-proposed.png",
+        "caption": "<ProgressBar label=\"Seats\" value={8} max={10} />\n<ProgressBar label=\"Storage\" value={41} max={50} tone=\"warning\" />"
+      }
+    },
+    {
+      "id": "ds-06",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "The VAT field has a placeholder and no label. TextField needs a visible label; placeholders disappear as you type and are not read reliably.",
+      "createdAt": "2026-11-11T09:12:00.000Z",
+      "selector": "#vat",
+      "links": [
+        {
+          "label": "Acme UI: TextField, labels",
+          "url": "https://ui.acme.example/components/text-field#labels"
+        }
+      ],
+      "point": {
+        "x": 0.95,
+        "y": 0.5
+      },
+      "proposal": {
+        "current": "proposals/ds-06-current.png",
+        "proposed": "proposals/ds-06-proposed.png",
+        "caption": "<TextField label=\"VAT number\" />"
+      }
+    },
+    {
+      "id": "ds-07",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Country is a div that looks like a select. It cannot be opened with the keyboard or read by a screen reader. Use Select (or Combobox for the full country list).",
+      "createdAt": "2026-11-11T09:14:00.000Z",
+      "selector": "#country",
+      "links": [
+        {
+          "label": "Acme UI: Select",
+          "url": "https://ui.acme.example/components/select"
+        },
+        {
+          "label": "Acme UI: Combobox",
+          "url": "https://ui.acme.example/components/combobox"
+        }
+      ],
+      "area": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      "proposal": {
+        "current": "proposals/ds-07-current.png",
+        "proposed": "proposals/ds-07-proposed.png",
+        "caption": "<Select label=\"Country\" options={countries} />"
+      }
+    },
+    {
+      "id": "ds-08",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Error text is ad hoc: red-500 text, lowercase, two exclamation marks, and not tied to the field. Use TextField error=\"…\" so it gets the icon, aria-describedby and the right tone.",
+      "createdAt": "2026-11-11T09:16:00.000Z",
+      "selector": "#vat-error",
+      "links": [
+        {
+          "label": "Acme UI: TextField, errors",
+          "url": "https://ui.acme.example/components/text-field#errors"
+        },
+        {
+          "label": "Acme UI: Voice, error messages",
+          "url": "https://ui.acme.example/content/voice#errors"
+        }
+      ],
+      "quote": "vat number is invalid!!",
+      "proposal": {
+        "current": "proposals/ds-08-current.png",
+        "proposed": "proposals/ds-08-proposed.png",
+        "caption": "<TextField label=\"VAT number\"\n  error=\"Enter a valid VAT number, for example PT123456789.\" />"
+      }
+    },
+    {
+      "id": "ds-09",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "A checkbox styled as an on/off setting. For a setting that applies right away, use Switch; the green accent is not a token either.",
+      "createdAt": "2026-11-11T09:18:00.000Z",
+      "selector": "#autopay",
+      "links": [
+        {
+          "label": "Acme UI: Switch vs Checkbox",
+          "url": "https://ui.acme.example/components/switch#when-to-use"
+        }
+      ],
+      "point": {
+        "x": 0.02,
+        "y": 0.5
+      },
+      "replies": [
+        {
+          "author": "Clara Voss",
+          "comment": "Swapped to Switch in the next build.",
+          "createdAt": "2026-11-11T10:05:00.000Z"
+        }
+      ],
+      "resolved": true,
+      "proposal": {
+        "current": "proposals/ds-09-current.png",
+        "proposed": "proposals/ds-09-proposed.png",
+        "caption": "<Switch label=\"Pay invoices automatically\" checked />"
+      }
+    },
+    {
+      "id": "ds-10",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Status badges: \"overdue\" uses the success (green) tone, and labels are lowercase. Badge tone=\"danger\" for overdue, and Title Case labels (\"Paid\", \"Overdue\").",
+      "createdAt": "2026-11-11T09:20:00.000Z",
+      "selector": "#b-overdue",
+      "links": [
+        {
+          "label": "Acme UI: Badge, tones",
+          "url": "https://ui.acme.example/components/badge#tones"
+        },
+        {
+          "label": "Acme UI: Content, casing",
+          "url": "https://ui.acme.example/content/casing"
+        }
+      ],
+      "point": {
+        "x": 0.9,
+        "y": 0.2
+      },
+      "proposal": {
+        "current": "proposals/ds-10-current.png",
+        "proposed": "proposals/ds-10-proposed.png",
+        "caption": "<Badge tone=\"danger\">Overdue</Badge>"
+      }
+    },
+    {
+      "id": "ds-11",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Amounts are left-aligned and the table is hand-built. DataTable right-aligns numeric columns (column type=\"currency\") and formats them for the locale.",
+      "createdAt": "2026-11-11T09:22:00.000Z",
+      "selector": "#inv-table",
+      "links": [
+        {
+          "label": "Acme UI: DataTable, numeric columns",
+          "url": "https://ui.acme.example/components/data-table#numeric"
+        }
+      ],
+      "quote": "1.249,00 €",
+      "proposal": {
+        "current": "proposals/ds-11-current.png",
+        "proposed": "proposals/ds-11-proposed.png",
+        "caption": "<DataTable columns={[..., { key: \"amount\", type: \"currency\" }]} />"
+      }
+    },
+    {
+      "id": "ds-12",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Icon-only download buttons have no accessible name or tooltip. IconButton requires a label (\"Download INV-1042\"), which also becomes its tooltip.",
+      "createdAt": "2026-11-11T09:24:00.000Z",
+      "selector": "#dl-1042",
+      "links": [
+        {
+          "label": "Acme UI: IconButton, labels",
+          "url": "https://ui.acme.example/components/icon-button#labels"
+        }
+      ],
+      "point": {
+        "x": 0.5,
+        "y": 0.1
+      },
+      "replies": [
+        {
+          "author": "Jonas Weber",
+          "comment": "Do we have a download icon in the set? This is a text arrow.",
+          "createdAt": "2026-11-11T09:50:00.000Z"
+        },
+        {
+          "agent": "claude-code",
+          "comment": "Yes: icon=\"download\" from the Acme icon set. Text glyphs render differently per OS.",
+          "createdAt": "2026-11-11T09:51:00.000Z",
+          "links": [
+            {
+              "label": "Acme UI: Icons",
+              "url": "https://ui.acme.example/foundations/icons#set"
+            }
+          ]
+        }
+      ],
+      "proposal": {
+        "current": "proposals/ds-12-current.png",
+        "proposed": "proposals/ds-12-proposed.png",
+        "caption": "<IconButton icon=\"download\" label=\"Download INV-1042\" />"
+      }
+    },
+    {
+      "id": "ds-13",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Disabled button with a hover tooltip: disabled buttons don't get focus, so keyboard users never see why. Keep it enabled and open an upgrade Dialog, or show the reason inline.",
+      "createdAt": "2026-11-11T09:26:00.000Z",
+      "selector": "#export",
+      "links": [
+        {
+          "label": "Acme UI: Button, disabled",
+          "url": "https://ui.acme.example/components/button#disabled"
+        },
+        {
+          "label": "Acme UI: Tooltip",
+          "url": "https://ui.acme.example/components/tooltip#disabled-elements"
+        }
+      ],
+      "point": {
+        "x": 0.9,
+        "y": 0.2
+      },
+      "proposal": {
+        "current": "proposals/ds-13-current.png",
+        "proposed": "proposals/ds-13-proposed.png",
+        "caption": "<Button variant=\"ghost\">Export <Badge>Pro</Badge></Button>\nopens the upgrade dialog instead of being disabled"
+      }
+    },
+    {
+      "id": "ds-14",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "\"Cancel plan\" is a link styled as a red button, and it cancels without a confirmation. Use Button variant=\"danger\" that opens a ConfirmDialog.",
+      "createdAt": "2026-11-11T09:28:00.000Z",
+      "selector": "#cancel",
+      "links": [
+        {
+          "label": "Acme UI: Button, danger",
+          "url": "https://ui.acme.example/components/button#danger"
+        },
+        {
+          "label": "Acme UI: ConfirmDialog",
+          "url": "https://ui.acme.example/components/confirm-dialog"
+        }
+      ],
+      "area": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      "proposal": {
+        "current": "proposals/ds-14-current.png",
+        "proposed": "proposals/ds-14-proposed.png",
+        "caption": "<Button variant=\"danger\">Cancel plan…</Button>\nopens <ConfirmDialog tone=\"danger\">"
+      }
+    },
+    {
+      "id": "ds-15",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "Avatar is a custom orange circle. Avatar takes the initials and picks the color from the name, so it matches the rest of the product.",
+      "createdAt": "2026-11-11T09:30:00.000Z",
+      "selector": "#me",
+      "links": [
+        {
+          "label": "Acme UI: Avatar",
+          "url": "https://ui.acme.example/components/avatar"
+        }
+      ],
+      "point": {
+        "x": 0.85,
+        "y": 0.15
+      },
+      "proposal": {
+        "current": "proposals/ds-15-current.png",
+        "proposed": "proposals/ds-15-proposed.png",
+        "caption": "<Avatar name=\"Clara Voss\" />"
+      }
+    },
+    {
+      "id": "ds-16",
+      "page": "index.html",
+      "agent": "claude-code",
+      "comment": "\"Save\" is full-width here and auto-width everywhere else. Full-width buttons are for mobile and dialogs only.",
+      "createdAt": "2026-11-11T09:32:00.000Z",
+      "selector": "#save-contact",
+      "links": [
+        {
+          "label": "Acme UI: Button, width",
+          "url": "https://ui.acme.example/components/button#width"
+        }
+      ],
+      "point": {
+        "x": 0.97,
+        "y": 0.5
+      },
+      "replies": [
+        {
+          "author": "Clara Voss",
+          "comment": "Good catch.",
+          "createdAt": "2026-11-11T10:10:00.000Z"
+        }
+      ],
+      "proposal": {
+        "current": "proposals/ds-16-current.png",
+        "proposed": "proposals/ds-16-proposed.png",
+        "caption": "<Button variant=\"secondary\">Save</Button> (auto width, end of the form)"
+      }
+    }
+  ]
+}

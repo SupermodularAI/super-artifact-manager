@@ -1,0 +1,38 @@
+{
+  "id": "expense-policy",
+  "type": "document",
+  "name": "Expense policy",
+  "workspace": "Acme",
+  "project": "Expenses",
+  "owner": "Sam Rivera",
+  "updated": "2026-11-10",
+  "comments": {
+    "file": "comments.json"
+  },
+  "iterations": [
+    {
+      "id": "v4",
+      "label": "v4 (current)",
+      "url": "index.html",
+      "status": "review"
+    },
+    {
+      "id": "v3",
+      "label": "v3",
+      "url": "v3.html",
+      "status": "changes"
+    },
+    {
+      "id": "v2",
+      "label": "v2",
+      "url": "v2.html",
+      "status": "approved"
+    },
+    {
+      "id": "v1",
+      "label": "v1 (first draft)",
+      "url": "v1.html",
+      "status": "closed"
+    }
+  ]
+}

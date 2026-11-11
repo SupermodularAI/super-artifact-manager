@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "id": "pr-01",
+      "page": "index.html",
+      "comment": "Title slide: add the date range (Jul to Sep).",
+      "createdAt": "2026-11-03T09:48:00.000Z",
+      "author": "Clara Voss",
+      "selector": "section.slide:nth-of-type(1) h1",
+      "point": {
+        "x": 0.98,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "pr-02",
+      "page": "index.html",
+      "comment": "Give the number its comparison on the slide itself: \"1.4 days, down from 3.2\". People screenshot this slide.",
+      "createdAt": "2026-11-04T10:58:00.000Z",
+      "agent": "claude-code",
+      "selector": "section.slide:nth-of-type(2) .big",
+      "links": [
+        {
+          "label": "Plain language",
+          "url": "https://www.plainlanguage.gov/guidelines/"
+        }
+      ],
+      "replies": [
+        {
+          "comment": "Good call, adding \"from 3.2\" in smaller type.",
+          "createdAt": "2026-11-04T11:01:00.000Z",
+          "author": "Sam Rivera"
+        }
+      ]
+    },
+    {
+      "id": "pr-03",
+      "page": "index.html",
+      "comment": "These bars have no values or axis. Which one is the manager?",
+      "createdAt": "2026-11-05T09:02:00.000Z",
+      "author": "Jonas Weber",
+      "selector": "section.slide:nth-of-type(3) .bars",
+      "area": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+      },
+      "replies": [
+        {
+          "comment": "Label each bar with its share of the wait (45%, 30%, 15%, 10%) and say it in the text too, for anyone who can't see the chart.",
+          "createdAt": "2026-11-05T10:05:00.000Z",
+          "agent": "claude-code",
+          "links": [
+            {
+              "label": "WAI: complex images",
+              "url": "https://www.w3.org/WAI/tutorials/images/complex/"
+            }
+          ]
+        },
+        {
+          "comment": "Yes, and order them largest first.",
+          "createdAt": "2026-11-05T12:11:00.000Z",
+          "author": "Jonas Weber"
+        }
+      ]
+    },
+    {
+      "id": "pr-04",
+      "page": "index.html",
+      "comment": "\"Declined payouts explained\" was the most-praised change in the survey. Lead with it.",
+      "createdAt": "2026-11-06T11:15:00.000Z",
+      "author": "Priya Nair",
+      "selector": "section.slide:nth-of-type(4) .row .card:nth-child(3)",
+      "point": {
+        "x": 0.9,
+        "y": 0.2
+      }
+    },
+    {
+      "id": "pr-05",
+      "page": "index.html",
+      "comment": "Strong quote. Is it from a real approver? Name the team if we can.",
+      "createdAt": "2026-11-06T15:27:00.000Z",
+      "author": "Ana Costa",
+      "selector": "section.slide:nth-of-type(5) .quote",
+      "quote": "the dialog gets in the way",
+      "replies": [
+        {
+          "comment": "Anonymous on purpose. Resolving.",
+          "createdAt": "2026-11-07T09:16:00.000Z",
+          "author": "Clara Voss"
+        }
+      ],
+      "resolved": true
+    },
+    {
+      "id": "pr-06",
+      "page": "index.html",
+      "comment": "Next quarter lists three items with no owner or date. Add both, or it reads as a wish list.",
+      "createdAt": "2026-11-07T10:19:00.000Z",
+      "agent": "claude-code",
+      "selector": "section.slide:nth-of-type(6) .row",
+      "area": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 1.0
+      }
+    },
+    {
+      "id": "pr-07",
+      "page": "v1.html",
+      "comment": "1.6 days was before the September fix. Update to 1.4.",
+      "createdAt": "2026-11-01T10:37:00.000Z",
+      "author": "Sam Rivera",
+      "selector": "section.slide:nth-of-type(2) .big",
+      "point": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "resolved": true
+    },
+    {
+      "id": "pr-08",
+      "page": "v3.html",
+      "comment": "Risks slide is right for the board cut. Keep it to two.",
+      "createdAt": "2026-11-09T10:33:00.000Z",
+      "author": "Clara Voss",
+      "selector": "section.slide:nth-of-type(6) h2",
+      "point": {
+        "x": 0.9,
+        "y": 0.5
+      },
+      "replies": [
+        {
+          "comment": "Two risks, each with a mitigation and an owner, fits the slide.",
+          "createdAt": "2026-11-09T11:36:00.000Z",
+          "agent": "claude-code"
+        }
+      ]
+    },
+    {
+      "id": "pr-09",
+      "page": "v4.html",
+      "comment": "1.2 days is a forecast, not a measurement. Mark it as a target.",
+      "createdAt": "2026-11-10T10:40:00.000Z",
+      "agent": "claude-code",
+      "selector": "section.slide:nth-of-type(2) .big",
+      "links": [
+        {
+          "label": "Plain language",
+          "url": "https://www.plainlanguage.gov/guidelines/"
+        }
+      ]
+    }
+  ]
+}

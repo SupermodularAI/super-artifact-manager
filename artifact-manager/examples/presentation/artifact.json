@@ -1,0 +1,38 @@
+{
+  "id": "q3-review",
+  "type": "presentation",
+  "name": "Expenses Q3 review",
+  "workspace": "Acme",
+  "project": "Expenses",
+  "owner": "Sam Rivera",
+  "updated": "2026-11-10",
+  "comments": {
+    "file": "comments.json"
+  },
+  "iterations": [
+    {
+      "id": "v4",
+      "label": "v4 (Q4 draft)",
+      "url": "v4.html",
+      "status": "draft"
+    },
+    {
+      "id": "v3",
+      "label": "v3 (board cut)",
+      "url": "v3.html",
+      "status": "review"
+    },
+    {
+      "id": "v2",
+      "label": "v2 (final)",
+      "url": "index.html",
+      "status": "approved"
+    },
+    {
+      "id": "v1",
+      "label": "v1 (draft)",
+      "url": "v1.html",
+      "status": "closed"
+    }
+  ]
+}
