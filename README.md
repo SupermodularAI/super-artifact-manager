@@ -35,7 +35,7 @@
   </a>
 </p>
 
-<p align="center"><a href="./media/walkthrough.mp4"><img src="./media/walkthrough.jpg" alt="Watch the walkthrough (3:20)"></a></p>
+<p align="center"><a href="./media/walkthrough.mp4"><img src="./media/walkthrough.gif" alt="Watch the walkthrough (3:20)"></a></p>
 
 Your agent builds a working prototype in a day. Then it gets shared as a localhost
 link, one happy path, feedback in Slack. Super Artifact Manager keeps what Figma got
